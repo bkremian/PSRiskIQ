@@ -1,0 +1,2183 @@
+[
+  {
+    "Name": "GetV2Account",
+    "Path": "/v2/account",
+    "Method": "get",
+    "Description": "List current account metadata and settings"
+  },
+  {
+    "Name": "GetV2AccountClassifications",
+    "Path": "/v2/account/classifications",
+    "Method": "get",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Retrieve items with the specified classification",
+    "Parameters": [
+      {
+        "Dynamic": "Type",
+        "Name": "classification",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Enum": [
+          "malicious",
+          "suspicious",
+          "non_malicious",
+          "unknown"
+        ],
+        "Required": false,
+        "Description": "Classification type"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2AccountHistory",
+    "Path": "/v2/account/history",
+    "Method": "get",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "List API usage history of the account",
+    "Parameters": [
+      {
+        "Dynamic": "Source",
+        "Name": "source",
+        "Type": "str",
+        "Enum": [
+          "api",
+          "ui"
+        ],
+        "In": [
+          "body"
+        ],
+        "Required": false,
+        "Description": "History source [api, ui]"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2AccountMonitors",
+    "Path": "/v2/account/monitors",
+    "Method": "get",
+    "Description": "Get active monitor"
+  },
+  {
+    "Name": "GetV2AccountOrganization",
+    "Path": "/v2/account/organization",
+    "Method": "get",
+    "Description": "List current organization metadata"
+  },
+  {
+    "Name": "GetV2AccountOrganizationTeamstream",
+    "Path": "/v2/account/organization/teamstream",
+    "Method": "get",
+    "Description": "List team activity",
+    "Parameters": [
+      {
+        "Dynamic": "Source",
+        "Name": "source",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Source filter"
+      },
+      {
+        "Dynamic": "DateTime",
+        "Name": "dt",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Datetime filter"
+      },
+      {
+        "Dynamic": "Type",
+        "Name": "type",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Type filter"
+      },
+      {
+        "Dynamic": "Focus",
+        "Name": "focus",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Focus filter (domain, ip, etc)"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2AccountQuotas",
+    "Path": "/v2/account/quotas",
+    "Method": "get",
+    "Description": "List current account and organization quotas"
+  },
+  {
+    "Name": "GetV2AccountSources",
+    "Path": "/v2/account/sources",
+    "Method": "get",
+    "Description": "Check sources being used for queries",
+    "Parameters": [
+      {
+        "Dynamic": "Source",
+        "Name": "source",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Source filter"
+      }
+    ]
+  },
+  {
+    "Name": "DeleteV2ActionsTags",
+    "Path": "/v2/actions/tags",
+    "Method": "delete",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Removes tags from an artifact",
+    "Parameters": [
+      {
+        "Dynamic": "Artifact",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "Artifact"
+      },
+      {
+        "Dynamic": "Tags",
+        "Name": "tags",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "One or more tags to remove"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2ActionsBulkClassification",
+    "Path": "/v2/actions/bulk/classification",
+    "Method": "get",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Retrieve classification statuses for given domains",
+    "Parameters": [
+      {
+        "Dynamic": "Domains",
+        "Name": "query",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Pattern": "(?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)",
+        "Required": true,
+        "Description": "One or more domains"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2ActionsClassification",
+    "Path": "/v2/actions/classification",
+    "Method": "get",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Retrieve classification status for a given domain",
+    "Parameters": [
+      {
+        "Dynamic": "Domain",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Pattern": "(?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)",
+        "Required": true,
+        "Description": "Domain"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2ActionsClassificationBulk",
+    "Path": "/v2/actions/bulk/classification",
+    "Method": "get",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Retrieve classification status for multiple domains",
+    "Parameters": [
+      {
+        "Dynamic": "Domains",
+        "Name": "query",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Pattern": "(?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)",
+        "Required": true,
+        "Description": "Domains"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2ActionsDynamicDns",
+    "Path": "/v2/actions/dynamic-dns",
+    "Method": "get",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Indicates whether or not a domain's DNS records are updated via dynamic DNS",
+    "Parameters": [
+      {
+        "Dynamic": "Domain",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Pattern": "(?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)",
+        "Required": true,
+        "Description": "Domain"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2ActionsEverCompromised",
+    "Path": "/v2/actions/ever-compromised",
+    "Method": "get",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Indicates whether or not a given domain has ever been compromised",
+    "Parameters": [
+      {
+        "Dynamic": "Domain",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Pattern": "(?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)",
+        "Description": "Domain"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2ActionsMonitor",
+    "Path": "/v2/actions/monitor",
+    "Method": "get",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Indicates whether or not a domain is monitored",
+    "Parameters": [
+      {
+        "Dynamic": "Domain",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Pattern": "(?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)",
+        "Description": "Domain"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2ActionsSinkhole",
+    "Path": "/v2/actions/sinkhole",
+    "Method": "get",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Indicates whether or not an IPv4 address is a sinkhole",
+    "Parameters": [
+      {
+        "Dynamic": "IPv4",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Pattern": "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$",
+        "Required": true,
+        "Description": "IPv4 address to check for sinkhole status"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2ActionsTags",
+    "Path": "/v2/actions/tags",
+    "Method": "get",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "List tags associated with an artifact",
+    "Parameters": [
+      {
+        "Dynamic": "Artifact",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "Artifact"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2ActionsTagsSearch",
+    "Path": "/v2/actions/tags/search",
+    "Method": "get",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "List artifacts associated with a tag",
+    "Parameters": [
+      {
+        "Dynamic": "Tag",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "Tag"
+      }
+    ]
+  },
+  {
+    "Name": "PostV2ActionsBulkClassification",
+    "Path": "/v2/actions/bulk/classification",
+    "Method": "post",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Set classification statuses for given domains",
+    "Parameters": [
+      {
+        "Dynamic": "Domains",
+        "Name": "query",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Pattern": "(?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)",
+        "Description": "One or more domains"
+      }
+    ]
+  },
+  {
+    "Name": "PostV2ActionsClassification",
+    "Path": "/v2/actions/classification",
+    "Method": "post",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Sets the classification status for a given domain",
+    "Parameters": [
+      {
+        "Dynamic": "Domain",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Pattern": "(?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)",
+        "Description": "Domain"
+      },
+      {
+        "Dynamic": "Classification",
+        "Name": "classification",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Enum": [
+          "malicious",
+          "suspicious",
+          "non_malicious",
+          "unknown"
+        ],
+        "Description": "Classification status"
+      }
+    ]
+  },
+  {
+    "Name": "PostV2ActionsDynamicDns",
+    "Path": "/v2/actions/dynamic-dns",
+    "Method": "post",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Sets a domain's status to indicate whether or not its DNS records are updated via dynamic DNS",
+    "Parameters": [
+      {
+        "Dynamic": "Domain",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Pattern": "(?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)",
+        "Description": "domain for which to set dynamic DNS status"
+      },
+      {
+        "Dynamic": "Status",
+        "Name": "status",
+        "Type": "Bool",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "Dynamic DNS status"
+      }
+    ]
+  },
+  {
+    "Name": "PostV2ActionsEverCompromised",
+    "Path": "/v2/actions/ever-compromised",
+    "Method": "post",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Sets status for a domain to indicate if it has ever been compromised",
+    "Parameters": [
+      {
+        "Dynamic": "Domain",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Pattern": "(?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)",
+        "Description": "Domain"
+      },
+      {
+        "Dynamic": "Status",
+        "Name": "status",
+        "Type": "Bool",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "Compromise status"
+      }
+    ]
+  },
+  {
+    "Name": "PostV2ActionsSinkhole",
+    "Path": "/v2/actions/sinkhole",
+    "Method": "post",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Sets status for an IPv4 address to indicate whether or not it is a sinkhole",
+    "Parameters": [
+      {
+        "Dynamic": "IPv4",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Pattern": "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$",
+        "Required": true,
+        "Description": "IPv4 address for which to set sinkhole status"
+      },
+      {
+        "Dynamic": "Status",
+        "Name": "status",
+        "Type": "Bool",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "Sinkhole status"
+      }
+    ]
+  },
+  {
+    "Name": "PostV2ActionsTags",
+    "Path": "/v2/actions/tags",
+    "Method": "post",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Adds tags to an artifact",
+    "Parameters": [
+      {
+        "Dynamic": "Artifact",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "Artifact"
+      },
+      {
+        "Dynamic": "Tags",
+        "Name": "tags",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "One or more tags to add"
+      }
+    ]
+  },
+  {
+    "Name": "PutV2ActionsTags",
+    "Path": "/v2/actions/tags",
+    "Method": "put",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Sets the tags for a given artifact",
+    "Parameters": [
+      {
+        "Dynamic": "Artifact",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "Artifact"
+      },
+      {
+        "Dynamic": "Tags",
+        "Name": "tags",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "One or more tags to set"
+      }
+    ]
+  },
+  {
+    "Name": "DeleteV2Artifact",
+    "Path": "/v2/artifact",
+    "Method": "delete",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Delete an artifact",
+    "Parameters": [
+      {
+        "Dynamic": "ArtifactId",
+        "Name": "artifact",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
+        "Required": true,
+        "Description": "Artifact identifier"
+      }
+    ]
+  },
+  {
+    "Name": "DeleteV2ArtifactBulk",
+    "Path": "/v2/artifact/bulk",
+    "Method": "delete",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Delete artifacts in bulk",
+    "Parameters": [
+      {
+        "Dynamic": "ArtifactIds",
+        "Name": "artifacts",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
+        "Required": true,
+        "Description": "One or more artifact identifiers"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2Artifact",
+    "Path": "/v2/artifact",
+    "Method": "get",
+    "Description": "Find existing artifacts",
+    "Parameters": [
+      {
+        "Dynamic": "ArtifactId",
+        "Name": "artifact",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
+        "Required": false,
+        "Description": "Artifact identifier"
+      },
+      {
+        "Dynamic": "ProjectId",
+        "Name": "project",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
+        "Required": false,
+        "Description": "Project identifier"
+      },
+      {
+        "Dynamic": "Owner",
+        "Name": "owner",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Filter by owner (email address or organization)"
+      },
+      {
+        "Dynamic": "Creator",
+        "Name": "creator",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Filter by creator"
+      },
+      {
+        "Dynamic": "Organization",
+        "Name": "organization",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Filter by organization"
+      },
+      {
+        "Dynamic": "Query",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Filter by query (passivetotal.org, etc)"
+      },
+      {
+        "Dynamic": "Type",
+        "Name": "type",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Filter by artifact type (domain, ip, etc)"
+      }
+    ]
+  },
+  {
+    "Name": "PostV2Artifact",
+    "Path": "/v2/artifact",
+    "Method": "post",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Update artifact or toggle monitoring status",
+    "Parameters": [
+      {
+        "Dynamic": "ArtifactId",
+        "Name": "artifact",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
+        "Required": true,
+        "Description": "Artifact identifier"
+      },
+      {
+        "Dynamic": "Monitor",
+        "Name": "monitor",
+        "Type": "Bool",
+        "In": [
+          "body"
+        ],
+        "Required": false,
+        "Description": "Monitor status"
+      },
+      {
+        "Dynamic": "Tags",
+        "Name": "tags",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Required": false,
+        "Description": "One or more tags to set"
+      }
+    ]
+  },
+  {
+    "Name": "PostV2ArtifactBulk",
+    "Path": "/v2/artifact/bulk",
+    "Method": "post",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Update artifacts in bulk",
+    "Parameters": [
+      {
+        "Dynamic": "Array",
+        "Name": "artifacts",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Parent": "artifacts",
+        "Required": true,
+        "Description": "An array of hashtables matching artifact fields (artifact id, monitor, tags)"
+      }
+    ]
+  },
+  {
+    "Name": "PutV2Artifact",
+    "Path": "/v2/artifact",
+    "Method": "put",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Create an artifact",
+    "Parameters": [
+      {
+        "Dynamic": "ProjectId",
+        "Name": "project",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "Project identifier"
+      },
+      {
+        "Dynamic": "Query",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "Artifact value"
+      },
+      {
+        "Dynamic": "Type",
+        "Name": "type",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Enum": [
+          "ip",
+          "wildcard",
+          "email",
+          "domain",
+          "component",
+          "hash_md5",
+          "hash_sha1",
+          "hash_sha256",
+          "cookies_name",
+          "cookies_domain",
+          "url",
+          "certificate_serialnumber",
+          "certificate_sha1",
+          "certificate_issuercommonname",
+          "certificate_issueralternativename",
+          "certificate_subjectcommonname",
+          "certificate_subjectalternativename",
+          "certificate_issuerorganizationname",
+          "certificate_subjectorganizationname",
+          "certificate_issuerorganizationunit",
+          "certificate_subjectorganizationunit",
+          "certificate_issuerstreetaddress",
+          "certificate_subjectstreetaddress",
+          "certificate_issuerlocalityname",
+          "certificate_subjectlocalityname",
+          "certificate_issuerstateorprovincename",
+          "certificate_subjectstateorprovincename",
+          "certificate_issuercountry",
+          "certificate_subjectcountry",
+          "certificate_issuerserialnumber",
+          "certificate_subjectserialnumber"
+        ],
+        "Required": false,
+        "Description": "Artifact type"
+      },
+      {
+        "Dynamic": "Tags",
+        "Name": "tags",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Required": false,
+        "Description": "One or more tags to assign to the artifact"
+      }
+    ]
+  },
+  {
+    "Name": "PutV2ArtifactBulk",
+    "Path": "/v2/artifact/bulk",
+    "Method": "put",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Create artifacts in bulk",
+    "Parameters": [
+      {
+        "Dynamic": "Array",
+        "Name": "artifacts",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Parent": "artifacts",
+        "Required": true,
+        "Description": "An array of hashtables matching artifact fields (project id, query, type, tags)"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2EnrichmentBulk",
+    "Path": "/v2/enrichment/bulk",
+    "Method": "get",
+    "Description": "Get bulk enrichment data",
+    "Parameters": [
+      {
+        "Dynamic": "Query",
+        "Name": "query",
+        "Type": "array",
+        "In": [
+          "query"
+        ],
+        "Required": true,
+        "Pattern": "((?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)|^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$)",
+        "Description": "One or more domains or IPv4 addresses"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2EnrichmentBulkMalware",
+    "Path": "/v2/enrichment/bulk/malware",
+    "Method": "get",
+    "Description": "Get bulk malware data",
+    "Parameters": [
+      {
+        "Dynamic": "Query",
+        "Name": "query",
+        "Type": "array",
+        "In": [
+          "query"
+        ],
+        "Required": true,
+        "Pattern": "((?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)|^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$)",
+        "Description": "One or more domains or IPv4 addresses"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2EnrichmentBulkOsint",
+    "Path": "/v2/enrichment/bulk/osint",
+    "Method": "get",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Get bulk OSINT Data",
+    "Parameters": [
+      {
+        "Dynamic": "Query",
+        "Name": "query",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Pattern": "((?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)|^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$)",
+        "Description": "One or more domains or IPv4 addresses"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2Enrichment",
+    "Path": "/v2/enrichment",
+    "Method": "get",
+    "Description": "Get enrichment data",
+    "Parameters": [
+      {
+        "Dynamic": "Query",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": true,
+        "Pattern": "((?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)|^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$)",
+        "Description": "One or more domains or IPv4 addresses"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2EnrichmentMalware",
+    "Path": "/v2/enrichment/malware",
+    "Method": "get",
+    "Description": "Get malware data",
+    "Parameters": [
+      {
+        "Dynamic": "Query",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": true,
+        "Pattern": "((?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)|^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$)",
+        "Description": "Domain or IPv4 address"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2EnrichmentOsint",
+    "Path": "/v2/enrichment/osint",
+    "Method": "get",
+    "Description": "Get OSINT data",
+    "Parameters": [
+      {
+        "Dynamic": "Query",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": true,
+        "Pattern": "((?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)|^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$)",
+        "Description": "Domain or IPv4 address"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2EnrichmentSubdomains",
+    "Path": "/v2/enrichment/subdomains",
+    "Method": "get",
+    "Description": "Get subdomains",
+    "Parameters": [
+      {
+        "Dynamic": "Domain",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Pattern": "(?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)",
+        "Required": true,
+        "Description": "Domain"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2HostAttributesComponents",
+    "Path": "/v2/host-attributes/components",
+    "Method": "get",
+    "Description": "Retrieves the host attribute components of a query",
+    "Parameters": [
+      {
+        "Dynamic": "Query",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Pattern": "(?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)",
+        "Required": true,
+        "Description": "Domain or IPv4 address"
+      },
+      {
+        "Dynamic": "StartDate",
+        "Name": "start",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Pattern": "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}",
+        "Description": "Start date and time"
+      },
+      {
+        "Dynamic": "EndDate",
+        "Name": "end",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Pattern": "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}",
+        "Description": "End date and time"
+      },
+      {
+        "Dynamic": "Page",
+        "Name": "page",
+        "Type": "Int",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Position when paging through results"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2HostAttributesPairs",
+    "Path": "/v2/host-attributes/pairs",
+    "Method": "get",
+    "Description": "Retrieves host attribute pairs for a Domain or IPv4 address",
+    "Parameters": [
+      {
+        "Dynamic": "Query",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Pattern": "((?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)|^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$)",
+        "Required": true,
+        "Description": "Domain or IPv4 address"
+      },
+      {
+        "Dynamic": "Direction",
+        "Name": "direction",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": true,
+        "Enum": [
+          "children",
+          "parents"
+        ],
+        "Description": "Direction of target results"
+      },
+      {
+        "Dynamic": "StartDate",
+        "Name": "start",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Pattern": "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}",
+        "Required": false,
+        "Description": "Start date and time"
+      },
+      {
+        "Dynamic": "EndDate",
+        "Name": "end",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Pattern": "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}",
+        "Required": false,
+        "Description": "End date and time"
+      },
+      {
+        "Dynamic": "Page",
+        "Name": "page",
+        "Type": "Int",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Position when paging through results"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2HostAttributesTrackers",
+    "Path": "/v2/host-attributes/trackers",
+    "Method": "get",
+    "Description": "Retrieves host attribute trackers for a domain or IPv4 address",
+    "Parameters": [
+      {
+        "Dynamic": "Query",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Pattern": "((?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)|^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$)",
+        "Required": true,
+        "Description": "Domain or IPv4 address"
+      },
+      {
+        "Dynamic": "StartDate",
+        "Name": "start",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Pattern": "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}",
+        "Required": false,
+        "Description": "Start date and time"
+      },
+      {
+        "Dynamic": "EndDate",
+        "Name": "end",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Pattern": "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}",
+        "Required": false,
+        "Description": "End date and time"
+      },
+      {
+        "Dynamic": "Page",
+        "Name": "page",
+        "Type": "Int",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Position when paging through results"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2Monitor",
+    "Path": "/v2/monitor",
+    "Method": "get",
+    "Description": "Retrieve all alerts associated with an artifact or project",
+    "Parameters": [
+      {
+        "Dynamic": "ProjectId",
+        "Name": "project",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
+        "Required": false,
+        "Description": "Project identifier"
+      },
+      {
+        "Dynamic": "ArtifactId",
+        "Name": "artifact",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Artifact identifier"
+      },
+      {
+        "Dynamic": "StartDate",
+        "Name": "start",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Restrict results to after a certain date and time"
+      },
+      {
+        "Dynamic": "EndDate",
+        "Name": "end",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Restrict results to before a certain date and time"
+      },
+      {
+        "Dynamic": "Size",
+        "Name": "size",
+        "Type": "Int",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Maximum number of results to return [default: 25]"
+      },
+      {
+        "Dynamic": "Page",
+        "Name": "page",
+        "Type": "Int",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Position when paging through results"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2DnsPassive",
+    "Path": "/v2/dns/passive",
+    "Method": "get",
+    "Description": "Retrieves the passive DNS results from active account sources",
+    "Parameters": [
+      {
+        "Dynamic": "Query",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": true,
+        "Pattern": "((?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)|^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$)",
+        "Description": "Domain or IPv4 address"
+      },
+      {
+        "Dynamic": "StartDate",
+        "Name": "start",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Pattern": "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}",
+        "Required": false,
+        "Description": "Restrict results to after a certain date and time"
+      },
+      {
+        "Dynamic": "EndDate",
+        "Name": "end",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Pattern": "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}",
+        "Required": false,
+        "Description": "Restrict results to before a certain date and time"
+      },
+      {
+        "Dynamic": "Timeout",
+        "Name": "timeout",
+        "Type": "int",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Timeout for external resources"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2DnsPassiveUnique",
+    "Path": "/v2/dns/passive/unique",
+    "Method": "get",
+    "Description": "Retrieves the unique passive DNS results from active account sources",
+    "Parameters": [
+      {
+        "Dynamic": "Query",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": true,
+        "Pattern": "((?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)|^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$)",
+        "Description": "Domain or IPv4 address"
+      },
+      {
+        "Dynamic": "StartDate",
+        "Name": "start",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Pattern": "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}",
+        "Description": "Restrict results to after a certain date and time"
+      },
+      {
+        "Dynamic": "EndDate",
+        "Name": "end",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Pattern": "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}",
+        "Description": "Restrict results to before a certain date and time"
+      },
+      {
+        "Dynamic": "Timeout",
+        "Name": "timeout",
+        "Type": "int",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Timeout for external resources"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2DnsSearchKeyword",
+    "Path": "/v2/dns/search/keyword",
+    "Method": "get",
+    "Description": "Searches the Passive DNS data for a keyword query",
+    "Parameters": [
+      {
+        "Dynamic": "Keyword",
+        "Name": "keyword",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": true,
+        "Description": "query"
+      }
+    ]
+  },
+  {
+    "Name": "DeleteV2Project",
+    "Path": "/v2/project",
+    "Method": "delete",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Delete a project",
+    "Parameters": [
+      {
+        "Dynamic": "ProjectId",
+        "Name": "project",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
+        "Required": true,
+        "Description": "Project identifier"
+      }
+    ]
+  },
+  {
+    "Name": "DeleteV2ProjectTag",
+    "Path": "/v2/project/tag",
+    "Method": "delete",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Remove project tags",
+    "Parameters": [
+      {
+        "Dynamic": "ProjectId",
+        "Name": "project",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
+        "Required": true,
+        "Description": "Project identifier"
+      },
+      {
+        "Dynamic": "Tags",
+        "Name": "tags",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "One or more project tags to remove"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2Project",
+    "Path": "/v2/project",
+    "Method": "get",
+    "Description": "Retrieves a project or projects by search filter",
+    "Parameters": [
+      {
+        "Dynamic": "ProjectId",
+        "Name": "project",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
+        "Required": false,
+        "Description": "Project identifier"
+      },
+      {
+        "Dynamic": "Owner",
+        "Name": "owner",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Filter by owner (email or organization)"
+      },
+      {
+        "Dynamic": "Creator",
+        "Name": "creator",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Filter by creator email"
+      },
+      {
+        "Dynamic": "Organization",
+        "Name": "organization",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Filter by organization"
+      },
+      {
+        "Dynamic": "Visibility",
+        "Name": "visibility",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Enum": [
+          "public",
+          "private",
+          "analyst"
+        ],
+        "Description": "Filter by visibility"
+      },
+      {
+        "Dynamic": "Featured",
+        "Name": "featured",
+        "Type": "Bool",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Filter by featured status"
+      }
+    ]
+  },
+  {
+    "Name": "PostV2Project",
+    "Path": "/v2/project",
+    "Method": "post",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Update a project",
+    "Parameters": [
+      {
+        "Dynamic": "ProjectId",
+        "Name": "project",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
+        "Required": true,
+        "Description": "Project identifier"
+      },
+      {
+        "Dynamic": "Name",
+        "Name": "name",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": false,
+        "Description": "Project name"
+      },
+      {
+        "Dynamic": "Description",
+        "Name": "description",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": false,
+        "Description": "Project description"
+      },
+      {
+        "Dynamic": "Visibility",
+        "Name": "visibility",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Enum": [
+          "public",
+          "private",
+          "analyst"
+        ],
+        "Required": false,
+        "Description": "Project visibility [public (default), private, analyst]"
+      },
+      {
+        "Dynamic": "Featured",
+        "Name": "featured",
+        "Type": "Bool",
+        "In": [
+          "body"
+        ],
+        "Required": false,
+        "Description": "Whether to feature the project"
+      },
+      {
+        "Dynamic": "Tags",
+        "Name": "tags",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Required": false,
+        "Description": "Project tags"
+      }
+    ]
+  },
+  {
+    "Name": "PostV2ProjectTag",
+    "Path": "/v2/project/tag",
+    "Method": "post",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Add project tags",
+    "Parameters": [
+      {
+        "Dynamic": "ProjectId",
+        "Name": "project",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
+        "Required": true,
+        "Description": "Project identifier"
+      },
+      {
+        "Dynamic": "Tags",
+        "Name": "tags",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "One or more tags to add"
+      }
+    ]
+  },
+  {
+    "Name": "PutV2Project",
+    "Path": "/v2/project",
+    "Method": "put",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Create a new project",
+    "Parameters": [
+      {
+        "Dynamic": "Name",
+        "Name": "name",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "Project name"
+      },
+      {
+        "Dynamic": "Visibility",
+        "Name": "visibility",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Enum": [
+          "public",
+          "private",
+          "analyst"
+        ],
+        "Description": "Project visibility [public, private, analyst]"
+      },
+      {
+        "Dynamic": "Description",
+        "Name": "description",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": false,
+        "Description": "Project description"
+      },
+      {
+        "Dynamic": "Featured",
+        "Name": "featured",
+        "Type": "Bool",
+        "In": [
+          "body"
+        ],
+        "Required": false,
+        "Description": "Whether to feature the project"
+      },
+      {
+        "Dynamic": "Tags",
+        "Name": "tags",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Required": false,
+        "Description": "One or more tags"
+      }
+    ]
+  },
+  {
+    "Name": "PutV2ProjectTag",
+    "Path": "/v2/project/tag",
+    "Method": "put",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Set project tags",
+    "Parameters": [
+      {
+        "Dynamic": "ProjectId",
+        "Name": "project",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
+        "Required": true,
+        "Description": "Project identifier"
+      },
+      {
+        "Dynamic": "Tags",
+        "Name": "tags",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "One or more tags to set"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2SslCertificate",
+    "Path": "/v2/ssl-certificate",
+    "Method": "get",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Retrieves an SSL certificate by its SHA-1 hash",
+    "Parameters": [
+      {
+        "Dynamic": "SHA1",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Pattern": "\\w{40}",
+        "Description": "SHA-1 hash of the certificate to retrieve"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2SslCertificateHistory",
+    "Path": "/v2/ssl-certificate/history",
+    "Method": "get",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Retrieves the SSL certificate history for a given certificate SHA-1 hash or IPv4 address",
+    "Parameters": [
+      {
+        "Dynamic": "Query",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Pattern": "(\\w{40}|^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$)",
+        "Description": "SHA-1 hash or associated IPv4 address for which to retrieve certificate history"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2SslCertificateSearch",
+    "Path": "/v2/ssl-certificate/search",
+    "Method": "get",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Retrieves SSL certificates for a given field value",
+    "Parameters": [
+      {
+        "Dynamic": "FieldName",
+        "Name": "field",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Enum": [
+          "issuerSurname",
+          "subjectOrganizationName",
+          "issuerCountry",
+          "issuerOrganizationUnitName",
+          "fingerprint",
+          "subjectOrganizationUnitName",
+          "serialNumber",
+          "subjectEmailAddress",
+          "subjectCountry",
+          "issuerGivenName",
+          "subjectCommonName",
+          "issuerCommonName",
+          "issuerStateOrProvinceName",
+          "issuerProvince",
+          "subjectStateOrProvinceName",
+          "sha1",
+          "subjectStreetAddress",
+          "subjectSerialNumber",
+          "issuerOrganizationName",
+          "subjectSurname",
+          "subjectLocalityName",
+          "issuerStreetAddress",
+          "issuerLocalityName",
+          "subjectGivenName",
+          "subjectProvince",
+          "issuerSerialNumber",
+          "issuerEmailAddress"
+        ],
+        "Description": "Search field"
+      },
+      {
+        "Dynamic": "FieldValue",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "Search value"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2SslCertificateSearchKeyword",
+    "Path": "/v2/ssl-certificate/search/keyword",
+    "Method": "get",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Retrieves SSL certificates for a given keyword",
+    "Parameters": [
+      {
+        "Dynamic": "Keyword",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "Search keyword"
+      }
+    ]
+  },
+  {
+    "Name": "DeleteV2ArtifactTag",
+    "Path": "/v2/artifact/tag",
+    "Method": "delete",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Remove a set of tags from an artifact or artifacts",
+    "Parameters": [
+      {
+        "Dynamic": "ArtifactIds",
+        "Name": "artifact",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
+        "Required": true,
+        "Description": "One or more artifact identifiers to update"
+      },
+      {
+        "Dynamic": "Tags",
+        "Name": "tags",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "One or more tags to remove"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2ArtifactTag",
+    "Path": "/v2/artifact/tag",
+    "Method": "get",
+    "Description": "Retrieve the tags of an artifact or artifacts",
+    "Parameters": [
+      {
+        "Dynamic": "ArtifactIds",
+        "Name": "artifact",
+        "Type": "array",
+        "In": [
+          "query"
+        ],
+        "Pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
+        "Required": true,
+        "Description": "One or more artifact identifiers"
+      }
+    ]
+  },
+  {
+    "Name": "PostV2ArtifactTag",
+    "Path": "/v2/artifact/tag",
+    "Method": "post",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Add tags to an artifact or artifacts",
+    "Parameters": [
+      {
+        "Dynamic": "ArtifactIds",
+        "Name": "artifact",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
+        "Description": "One or more artifact identifiers"
+      },
+      {
+        "Dynamic": "Tags",
+        "Name": "tags",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "One or more tags to add"
+      }
+    ]
+  },
+  {
+    "Name": "PutV2ArtifactTag",
+    "Path": "/v2/artifact/tag",
+    "Method": "put",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Set the tags of an artifact or artifacts",
+    "Parameters": [
+      {
+        "Dynamic": "ArtifactIds",
+        "Name": "artifact",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
+        "Required": true,
+        "Description": "One or more artifact identifiers"
+      },
+      {
+        "Dynamic": "Tags",
+        "Name": "tags",
+        "Type": "array",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Description": "One or more tag values"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2TrackersSearch",
+    "Path": "/v2/trackers/search",
+    "Method": "get",
+    "Headers": {
+      "ContentType": "application/json"
+    },
+    "Description": "Retrieves hosts that employ user tracking mechanisms served from another given host",
+    "Parameters": [
+      {
+        "Dynamic": "Domain",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Pattern": "(?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)",
+        "Required": true,
+        "Description": "Domain"
+      },
+      {
+        "Dynamic": "Type",
+        "Name": "type",
+        "Type": "string",
+        "In": [
+          "body"
+        ],
+        "Required": true,
+        "Enum": [
+          "51laId",
+          "AboutmeId",
+          "AddThisPubId",
+          "AddThisUsername",
+          "AuthorstreamId",
+          "BitbucketcomId",
+          "BitlyId",
+          "CheezburgerId",
+          "ClickyId",
+          "ColourloversId",
+          "DiigoId",
+          "DispusId",
+          "EngadgetId",
+          "EtsyId",
+          "FacebookId",
+          "FavstarId",
+          "FfffoundId",
+          "FlavorsId",
+          "FlickrId",
+          "FoodspottingId",
+          "FreesoundId",
+          "GitHubId",
+          "GithubId",
+          "GoogleAnalyticsTrackingId",
+          "GooglePlusId",
+          "GoogleTagManagerId",
+          "HubpagesId",
+          "ImgurId",
+          "InstagramId",
+          "KloutId",
+          "LanyrdId",
+          "LastfmId",
+          "LibrarythingId",
+          "LinkedInId",
+          "LinkedinId",
+          "MarketinglandcomId",
+          "MixpanelId",
+          "MuckrackId",
+          "MyanimelistId",
+          "MyfitnesspalId",
+          "NewRelicId",
+          "OptimizelyId",
+          "PandoraId",
+          "PicasaId",
+          "PinkbikeId",
+          "PinterestId",
+          "PlancastId",
+          "PlurkId",
+          "PornhubId",
+          "RaptorId",
+          "ReadabilityId",
+          "RedditId",
+          "RedtubeId",
+          "SlideshareId",
+          "SmugmugId",
+          "SmuleId",
+          "SoundcloudId",
+          "SoupId",
+          "SpeakerdeckId",
+          "SporcleId",
+          "StackoverflowId",
+          "SteamcommunityId",
+          "StumbleuponId",
+          "ThesixtyoneId",
+          "TribeId",
+          "TripitId",
+          "TumblrId",
+          "TwitpicId",
+          "TwitterId",
+          "UntappdId",
+          "UstreamId",
+          "WattpadId",
+          "WefollowId",
+          "WhosAmungUsId",
+          "WordPressId",
+          "Wordpress",
+          "SupportId",
+          "XangaId",
+          "Xfire",
+          "SocialId",
+          "XhamsterId",
+          "XvideosId",
+          "YandexMetricaCounterId",
+          "YouTubeChannel",
+          "YouTubeId",
+          "YoutubeId"
+        ],
+        "Description": "Type of tracker to retrieve"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2Whois",
+    "Path": "/v2/whois",
+    "Method": "get",
+    "Description": "Retrieve WHOIS data for a domain",
+    "Parameters": [
+      {
+        "Dynamic": "Domain",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": true,
+        "Pattern": "(?=^.{1,254}$)(^(?:(?!\\d+\\.|-)[a-zA-Z0-9_\\-]{1,63}(?<!-)\\.?)+(?:[a-zA-Z]{2,})$)",
+        "Description": "Domain"
+      },
+      {
+        "Dynamic": "CompactRecord",
+        "Name": "compact_record",
+        "Type": "Bool",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Compress the results"
+      },
+      {
+        "Dynamic": "History",
+        "Name": "history",
+        "Type": "Bool",
+        "In": [
+          "query"
+        ],
+        "Required": false,
+        "Description": "Return historical results"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2WhoisSearch",
+    "Path": "/v2/whois/search",
+    "Method": "get",
+    "Description": "Search WHOIS data by field and value",
+    "Parameters": [
+      {
+        "Dynamic": "FieldValue",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": true,
+        "Description": "The value to query"
+      },
+      {
+        "Dynamic": "FieldName",
+        "Name": "field",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": true,
+        "Enum": [
+          "email",
+          "domain",
+          "name",
+          "organization",
+          "address",
+          "phone",
+          "nameserver"
+        ],
+        "Description": "The type of field to query"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2WhoisSearchKeyword",
+    "Path": "/v2/whois/search/keyword",
+    "Method": "get",
+    "Description": "Search WHOIS data by keyword",
+    "Parameters": [
+      {
+        "Dynamic": "Keyword",
+        "Name": "keyword",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Required": true,
+        "Description": "The keyword to query"
+      }
+    ]
+  },
+  {
+    "Name": "GetV2Services",
+    "Path": "/v2/services",
+    "Method": "get",
+    "Description": "List exposed services for an IPv4 address",
+    "Parameters": [
+      {
+        "Dynamic": "IP",
+        "Name": "query",
+        "Type": "string",
+        "In": [
+          "query"
+        ],
+        "Pattern": "'^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'",
+        "Required": true,
+        "Description": "IPv4 address"
+      }
+    ]
+  }
+]
