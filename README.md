@@ -84,22 +84,182 @@ List team activity
 
 ### Actions
 **Add-RiskTags**:\
+Add tags to an artifact
+```
+  -Artifact [String] (Required)
+    Artifact
+
+  -Tags [Array] (Required)
+    One or more tags to add
+```
+
 **Get-RiskClassification**:\
+Retrieve items with the specified classification
+```
+  -Type [String] <malicious, suspicious, non_malicious, unknown>
+    Classification type
+```
+
+Retrieve classification status for a given domain
+```
+  -Domain [String] (Required)
+    Domain
+```
+
+Retrieve classification status for multiple domains
+```
+  -Domains [Array] (Required)
+    Domains
+```
+
 **Get-RiskCompromise**:\
+Indicates whether or not a given domain has ever been compromised
+```
+  -Domain [String] (Required)
+    Domain
+```
+
 **Get-RiskDDNS**:\
+Indicates whether or not a domain's DNS records are updated via dynamic DNS
+```
+  -Domain [String] (Required)
+    Domain
+```
+
 **Get-RiskMonitor**:\
+Indicates whether or not a domain is monitored
+```
+  -Domain [String] (Required)
+    Domain
+```
+
 **Get-RiskSinkhole**:\
+Indicates whether or not an IPv4 address is a sinkhole
+```
+  -IPv4 [String] (Required)
+    IPv4 address to check for sinkhole status
+```
+
 **Get-RiskTags**:\
+List tags associated with an artifact
+```
+  -Artifact [String] (Required)
+    Artifact
+```
+
+List artifacts associated with a tag
+```
+  -Tag [String] (Required)
+    Tag
+```
+
 **Remove-RiskTags**:\
+Removes tags from an artifact
+```
+  -Artifact [String] (Required)
+    Artifact
+
+  -Tags [Array] (Required)
+    One or more tags to remove
+```
+
 **Set-RiskClassification**:\
+Sets the classification status for a given domain
+```
+  -Classification [String] (Required) <malicious, suspicious, non_malicious, unknown>
+    Classification status
+
+  -Domain [String] (Required)
+    Domain
+```
+
 **Set-RiskCompromise**:\
+Sets status for a domain to indicate if it has ever been compromised
+```
+  -Domain [String] (Required)
+    Domain
+
+  -Status [Boolean] (Required)
+    Compromise status
+```
+
 **Set-RiskDDNS**:\
+Sets a domain's status to indicate whether or not its DNS records are updated via dynamic DNS
+```
+  -Domain [String] (Required)
+    domain for which to set dynamic DNS status
+
+  -Status [Boolean] (Required)
+    Dynamic DNS status
+```
+
 **Set-RiskSinkhole**:\
+Sets status for an IPv4 address to indicate whether or not it is a sinkhole
+```
+  -IPv4 [String] (Required)
+    IPv4 address for which to set sinkhole status
+
+  -Status [Boolean] (Required)
+    Sinkhole status
+```
+
 **Set-RiskTags**:\
+Sets the tags for a given artifact
+```
+  -Artifact [String] (Required)
+    Artifact
+
+  -Tags [Array] (Required)
+    One or more tags to set
+```
 
 ### Artifacts
 **Get-RiskArtifact**:\
+Find existing artifacts
+```
+  -ArtifactId [String]
+    Artifact identifier
+
+  -Creator [String]
+    Filter by creator
+
+  -Organization [String]
+    Filter by organization
+
+  -Owner [String]
+    Filter by owner (email address or organization)
+
+  -ProjectId [String]
+    Project identifier
+
+  -Query [String]
+    Filter by query (passivetotal.org, etc)
+
+  -Type [String]
+    Filter by artifact type (domain, ip, etc)
+```
+
 **New-RiskArtifact**:\
+Create an artifact
+```
+  -ProjectId [String] (Required)
+    Project identifier
+
+  -Query [String] (Required)
+    Artifact value
+
+  -Tags [Array]
+    One or more tags to assign to the artifact
+
+  -Type [String] <ip, wildcard, email, domain, component, hash_md5, hash_sha1, hash_sha256, cookies_name, cookies_domain, url, certificate_serialnumber, certificate_sha1, certificate_issuercommonname, certificate_issueralternativename, certificate_subjectcommonname, certificate_subjectalternativename, certificate_issuerorganizationname, certificate_subjectorganizationname, certificate_issuerorganizationunit, certificate_subjectorganizationunit, certificate_issuerstreetaddress, certificate_subjectstreetaddress, certificate_issuerlocalityname, certificate_subjectlocalityname, certificate_issuerstateorprovincename, certificate_subjectstateorprovincename, certificate_issuercountry, certificate_subjectcountry, certificate_issuerserialnumber, certificate_subjectserialnumber>
+    Artifact type
+
+  Create artifacts in bulk
+
+  -Array [Array] (Required)
+    An array of hashtables matching artifact fields (project id, query, type, tags)
+```
+
 **Remove-RiskArtifact**:\
 **Update-RiskArtifact**:\
 
