@@ -251,17 +251,58 @@ Create an artifact
   -Tags [Array]
     One or more tags to assign to the artifact
 
-  -Type [String] <ip, wildcard, email, domain, component, hash_md5, hash_sha1, hash_sha256, cookies_name, cookies_domain, url, certificate_serialnumber, certificate_sha1, certificate_issuercommonname, certificate_issueralternativename, certificate_subjectcommonname, certificate_subjectalternativename, certificate_issuerorganizationname, certificate_subjectorganizationname, certificate_issuerorganizationunit, certificate_subjectorganizationunit, certificate_issuerstreetaddress, certificate_subjectstreetaddress, certificate_issuerlocalityname, certificate_subjectlocalityname, certificate_issuerstateorprovincename, certificate_subjectstateorprovincename, certificate_issuercountry, certificate_subjectcountry, certificate_issuerserialnumber, certificate_subjectserialnumber>
+  -Type [String] <ip, wildcard, email, domain, component, hash_md5, hash_sha1, hash_sha256,\
+      cookies_name, cookies_domain, url, certificate_serialnumber, certificate_sha1,\
+      certificate_issuercommonname, certificate_issueralternativename,\
+      certificate_subjectcommonname, certificate_subjectalternativename,\
+      certificate_issuerorganizationname, certificate_subjectorganizationname,\
+      certificate_issuerorganizationunit, certificate_subjectorganizationunit,\
+      certificate_issuerstreetaddress, certificate_subjectstreetaddress,\
+      certificate_issuerlocalityname, certificate_subjectlocalityname,\
+      certificate_issuerstateorprovincename, certificate_subjectstateorprovincename,\
+      certificate_issuercountry, certificate_subjectcountry, certificate_issuerserialnumber,\
+      certificate_subjectserialnumber>
     Artifact type
+```
 
-  Create artifacts in bulk
-
+Create artifacts in bulk
+```
   -Array [Array] (Required)
     An array of hashtables matching artifact fields (project id, query, type, tags)
 ```
 
 **Remove-RiskArtifact**:\
+
+Delete an artifact
+```
+  -ArtifactId [String] (Required)
+    Artifact identifier
+```
+
+Delete artifacts in bulk
+```
+  -ArtifactIds [Array] (Required)
+    One or more artifact identifiers
+```
+
 **Update-RiskArtifact**:\
+Update artifact or toggle monitoring status
+```
+  -ArtifactId [String] (Required)
+    Artifact identifier
+
+  -Monitor [Boolean]
+    Monitor status
+
+  -Tags [Array]
+    One or more tags to set
+```
+
+Update artifacts in bulk
+```
+  -Array [Array] (Required)
+    An array of hashtables matching artifact fields (artifact id, monitor, tags)
+```
 
 ### Attributes
 **Get-RiskComponents**:\
