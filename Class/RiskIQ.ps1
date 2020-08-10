@@ -2,7 +2,6 @@ class RiskIQ {
     [string] $Hostname
     [string] $Id
     [securestring] $Secret
-    [string] $Proxy
     [array] $Endpoints
 
     RiskIQ ($Hostname) {
