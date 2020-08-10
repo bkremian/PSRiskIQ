@@ -1,5 +1,5 @@
 # Installation
-You can clone this repository to manually import PSRiskIQ, or install from the PowerShell Gallery:
+You can clone this repository to manually import PSRiskIQ, or install from the PowerShell Gallery:\
 `PS> Install-Module -Name PSRiskIQ`
 
 ## Requirements
@@ -48,28 +48,88 @@ List current account metadata and settings
 
 **Get-RiskHistory**:\
 List API usage history
-
 ```
 -Source [String] <api, ui>
     History source [api, ui]
 ```
 
-### Project
+**Get-RiskOrganization**:\
+List organization metadata
 
-### Artifact
+**Get-RiskQuota**:\
+List current account and organization quotas
 
-### Monitor
+**Get-RiskSources**:\
+List sources being used for queries
+```
+  -Source [String]
+    Source filter
+```
+
+**Get-RiskTeamstream**:\
+List team activity
+```
+  -DateTime [String]
+    Datetime filter
+
+  -Focus [String]
+    Focus filter (domain, ip, etc)
+
+  -Source [String]
+    Source filter
+
+  -Type [String]
+    Type filter
+```
 
 ### Actions
+**Add-RiskTags**:\
+**Get-RiskClassification**:\
+**Get-RiskCompromise**:\
+**Get-RiskDDNS**:\
+**Get-RiskMonitor**:\
+**Get-RiskSinkhole**:\
+**Get-RiskTags**:\
+**Remove-RiskTags**:\
+**Set-RiskClassification**:\
+**Set-RiskCompromise**:\
+**Set-RiskDDNS**:\
+**Set-RiskSinkhole**:\
+**Set-RiskTags**:\
+
+### Artifacts
+**Get-RiskArtifact**:\
+**New-RiskArtifact**:\
+**Remove-RiskArtifact**:\
+**Update-RiskArtifact**:\
+
+### Attributes
+**Get-RiskComponents**:\
+**Get-RiskHostPairs**:\
+**Get-RiskTrackers**:\
 
 ### Enrichment
+**Get-RiskEnrichment**:\
+**Get-RiskMalware**:\
+**Get-RiskOSInt**:\
 
-### Trackers
+### Monitor
+**Get-RiskAlerts**:\
 
-### WHOIS
+### Projects
+**Add-RiskProjectTags**:\
+**Get-RiskProject**:\
+**New-RiskProject**:\
+**Remove-RiskProject**:\
+**Remove-RiskProjectTags**:\
+**Set-RiskProjectTags**:\
+**Update-RiskProject**:\
 
-### Host Attributes
-
-### Passive DNS
+### Services
+**Get-RiskServices**:\
 
 ### SSL Certificates
+**Get-RiskCertificate**:\
+
+### WHOIS
+**Get-RiskWhois**:\

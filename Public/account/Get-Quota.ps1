@@ -1,7 +1,7 @@
 function Get-Quota {
 <#
 .SYNOPSIS
-    List organization metadata
+    List current account and organization quotas
 .DESCRIPTION
     Additional information is available with the -Help parameter
 .PARAMETER HELP
