@@ -251,16 +251,16 @@ Create an artifact
   -Tags [Array]
     One or more tags to assign to the artifact
 
-  -Type [String] <ip, wildcard, email, domain, component, hash_md5, hash_sha1, hash_sha256,\
-      cookies_name, cookies_domain, url, certificate_serialnumber, certificate_sha1,\
-      certificate_issuercommonname, certificate_issueralternativename,\
-      certificate_subjectcommonname, certificate_subjectalternativename,\
-      certificate_issuerorganizationname, certificate_subjectorganizationname,\
-      certificate_issuerorganizationunit, certificate_subjectorganizationunit,\
-      certificate_issuerstreetaddress, certificate_subjectstreetaddress,\
-      certificate_issuerlocalityname, certificate_subjectlocalityname,\
-      certificate_issuerstateorprovincename, certificate_subjectstateorprovincename,\
-      certificate_issuercountry, certificate_subjectcountry, certificate_issuerserialnumber,\
+  -Type [String] <ip, wildcard, email, domain, component, hash_md5, hash_sha1, hash_sha256,
+      cookies_name, cookies_domain, url, certificate_serialnumber, certificate_sha1,
+      certificate_issuercommonname, certificate_issueralternativename,
+      certificate_subjectcommonname, certificate_subjectalternativename,
+      certificate_issuerorganizationname, certificate_subjectorganizationname,
+      certificate_issuerorganizationunit, certificate_subjectorganizationunit,
+      certificate_issuerstreetaddress, certificate_subjectstreetaddress,
+      certificate_issuerlocalityname, certificate_subjectlocalityname,
+      certificate_issuerstateorprovincename, certificate_subjectstateorprovincename,
+      certificate_issuercountry, certificate_subjectcountry, certificate_issuerserialnumber,
       certificate_subjectserialnumber>
     Artifact type
 ```
@@ -306,31 +306,272 @@ Update artifacts in bulk
 
 ### Attributes
 **Get-RiskComponents**:\
+Retrieves the host attribute components of a query
+```
+  -Query [String] (Required)
+    Domain or IPv4 address
+
+  -EndDate [String]
+    End date and time
+
+  -Page [Int32]
+    Position when paging through results
+
+  -StartDate [String]
+    Start date and time
+```
+
 **Get-RiskHostPairs**:\
+Retrieves host attribute pairs for a Domain or IPv4 address
+```
+  -Direction [String] (Required) <children, parents>
+    Direction of target results
+
+  -Query [String] (Required)
+    Domain or IPv4 address
+
+  -EndDate [String]
+    End date and time
+
+  -Page [Int32]
+    Position when paging through results
+
+  -StartDate [String]
+    Start date and time
+```
+
 **Get-RiskTrackers**:\
+Retrieves host attribute trackers for a domain or IPv4 address
+```
+  -Query [String] (Required)
+    Domain or IPv4 address
+
+  -EndDate [String]
+    End date and time
+
+  -Page [Int32]
+    Position when paging through results
+
+  -StartDate [String]
+    Start date and time
+```
 
 ### Enrichment
 **Get-RiskEnrichment**:\
+Get bulk enrichment data
+```
+  -Query [Array] (Required)
+    One or more domains or IPv4 addresses
+```
+
 **Get-RiskMalware**:\
-**Get-RiskOSInt**:\
+Get bulk malware data
+```
+  -Query [Array] (Required)
+    One or more domains or IPv4 addresses
+```
+
+**Get-RiskOSINT**:\
+Get bulk OSINT Data
+```
+  -Query [Array] (Required)
+    One or more domains or IPv4 addresses
+```
 
 ### Monitor
 **Get-RiskAlerts**:\
+Retrieve all alerts associated with an artifact or project
+```
+  -ArtifactId [String]
+    Artifact identifier
+
+  -EndDate [String]
+    Restrict results to before a certain date and time
+
+  -Page [Int32]
+    Position when paging through results
+
+  -ProjectId [String]
+    Project identifier
+
+  -Size [Int32]
+    Maximum number of results to return [default: 25]
+
+  -StartDate [String]
+    Restrict results to after a certain date and time
+```
 
 ### Projects
 **Add-RiskProjectTags**:\
+Add project tags
+```
+  -ProjectId [String] (Required)
+    Project identifier
+
+  -Tags [Array] (Required)
+    One or more tags to add
+```
+
 **Get-RiskProject**:\
+Retrieves a project or projects by search filter
+```
+  -Creator [String]
+    Filter by creator email
+
+  -Featured [Boolean]
+    Filter by featured status
+
+  -Organization [String]
+    Filter by organization
+
+  -Owner [String]
+    Filter by owner (email or organization)
+
+  -ProjectId [String]
+    Project identifier
+
+  -Visibility [String] <public, private, analyst>
+    Filter by visibility
+```
+
 **New-RiskProject**:\
+Create a new project
+```
+  -Name [String] (Required)
+    Project name
+
+  -Visibility [String] (Required) <public, private, analyst>
+    Project visibility [public, private, analyst]
+
+  -Description [String]
+    Project description
+
+  -Featured [Boolean]
+    Whether to feature the project
+
+  -Tags [Array]
+    One or more tags
+```
+
 **Remove-RiskProject**:\
+Delete a project
+```
+  -ProjectId [String] (Required)
+    Project identifier
+```
+
 **Remove-RiskProjectTags**:\
+Remove project tags
+```
+  -ProjectId [String] (Required)
+    Project identifier
+
+  -Tags [Array] (Required)
+    One or more project tags to remove
+```
+
 **Set-RiskProjectTags**:\
+Set project tags
+```
+  -ProjectId [String] (Required)
+    Project identifier
+
+  -Tags [Array] (Required)
+    One or more tags to set
+```
+
 **Update-RiskProject**:\
+  Update a project
+```
+  -ProjectId [String] (Required)
+    Project identifier
+
+  -Description [String]
+    Project description
+
+  -Featured [Boolean]
+    Whether to feature the project
+
+  -Name [String]
+    Project name
+
+  -Tags [Array]
+    Project tags
+
+  -Visibility [String] <public, private, analyst>
+    Project visibility
+```
 
 ### Services
 **Get-RiskServices**:\
+List exposed services for an IPv4 address
+```
+  -IP [String] (Required)
+    IPv4 address
+```
 
 ### SSL Certificates
 **Get-RiskCertificate**:\
+Retrieves an SSL certificate by its SHA-1 hash
+```
+  -SHA1 [String] (Required)
+    SHA-1 hash of the certificate to retrieve
+```
+
+Retrieves the SSL certificate history for a given certificate SHA-1 hash or IPv4 address
+```
+  -History [SwitchParameter] (Required)
+
+  -Query [String] (Required)
+    SHA-1 hash or associated IPv4 address for which to retrieve certificate history
+```
+
+Retrieves SSL certificates for a given field value
+```
+  -FieldName [String] (Required) <issuerSurname, subjectOrganizationName, issuerCountry,
+      issuerOrganizationUnitName, fingerprint, subjectOrganizationUnitName, serialNumber,
+      subjectEmailAddress, subjectCountry, issuerGivenName, subjectCommonName, issuerCommonName,
+      issuerStateOrProvinceName, issuerProvince, subjectStateOrProvinceName, sha1,
+      subjectStreetAddress, subjectSerialNumber, issuerOrganizationName, subjectSurname,
+      subjectLocalityName, issuerStreetAddress, issuerLocalityName, subjectGivenName, subjectProvince,
+      issuerSerialNumber, issuerEmailAddress>
+    Search field
+
+  -FieldValue [String] (Required)
+    Search value
+```
+
+Retrieves SSL certificates for a given keyword
+```
+  -Keyword [String] (Required)
+    Search keyword
+```
 
 ### WHOIS
 **Get-RiskWhois**:\
+Retrieve WHOIS data for a domain
+```
+  -Domain [String] (Required)
+    Domain
+
+  -CompactRecord [Boolean]
+    Compress the results
+
+  -History [Boolean]
+    Return historical results
+```
+
+Search WHOIS data by field and value
+```
+  -FieldName [String] (Required) <email, domain, name, organization, address, phone, nameserver>
+    The type of field to query
+
+  -FieldValue [String] (Required)
+    The value to query
+```
+
+Search WHOIS data by keyword
+```
+  -Keyword [String] (Required)
+    The keyword to query
+```

@@ -107,7 +107,7 @@ FunctionsToExport = @(
     # enrichment
     'Get-Enrichment',
     'Get-Malware',
-    'Get-OSInt',
+    'Get-OSINT',
 
     # monitor
     'Get-Alerts',
