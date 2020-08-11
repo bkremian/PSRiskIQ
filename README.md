@@ -1,5 +1,5 @@
 # Installation
-You can clone this repository to manually import PSRiskIQ, or install from the PowerShell Gallery:\
+You can clone this repository to manually import PSRiskIQ, or install from the **[PowerShell Gallery](https://www.powershellgallery.com/packages/PSRiskIQ)**:\
 `PS> Install-Module -Name PSRiskIQ`
 
 ## Requirements
