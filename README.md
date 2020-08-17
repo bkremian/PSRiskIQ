@@ -42,10 +42,10 @@ You can list all available commands through `Get-Module -Name PSRiskIQ` once the
 been imported. Using the `-Help` parameter with any command will show the available parameters and
 a brief description.
 
-## Commands
+# Commands
 The commands in PSRiskIQ generally map to the [API documentation](https://api.passivetotal.org/index.html):
 
-### Account
+## Account
 **Get-RiskAccount**:\
 List current account metadata and settings
 
@@ -85,7 +85,7 @@ List team activity
     Type filter
 ```
 
-### Actions
+## Actions
 **Add-RiskTags**:\
 Add tags to an artifact
 ```
@@ -216,7 +216,7 @@ Sets the tags for a given artifact
     One or more tags to set
 ```
 
-### Artifacts
+## Artifacts
 **Get-RiskArtifact**:\
 Find existing artifacts
 ```
@@ -306,7 +306,7 @@ Update artifacts in bulk
     An array of hashtables matching artifact fields (artifact id, monitor, tags)
 ```
 
-### Attributes
+## Attributes
 **Get-RiskComponents**:\
 Retrieves the host attribute components of a query
 ```
@@ -358,7 +358,7 @@ Retrieves host attribute trackers for a domain or IPv4 address
     Start date and time
 ```
 
-### Enrichment
+## Enrichment
 **Get-RiskEnrichment**:\
 Get bulk enrichment data
 ```
@@ -380,7 +380,7 @@ Get bulk OSINT Data
     One or more domains or IPv4 addresses
 ```
 
-### Monitor
+## Monitor
 **Get-RiskAlerts**:\
 Retrieve all alerts associated with an artifact or project
 ```
@@ -403,7 +403,7 @@ Retrieve all alerts associated with an artifact or project
     Restrict results to after a certain date and time
 ```
 
-### Projects
+## Projects
 **Add-RiskProjectTags**:\
 Add project tags
 ```
@@ -504,7 +504,7 @@ Set project tags
     Project visibility
 ```
 
-### Services
+## Services
 **Get-RiskServices**:\
 List exposed services for an IPv4 address
 ```
@@ -512,7 +512,7 @@ List exposed services for an IPv4 address
     IPv4 address
 ```
 
-### SSL Certificates
+## SSL Certificates
 **Get-RiskCertificate**:\
 Retrieves an SSL certificate by its SHA-1 hash
 ```
@@ -549,7 +549,7 @@ Retrieves SSL certificates for a given keyword
     Search keyword
 ```
 
-### WHOIS
+## WHOIS
 **Get-RiskWhois**:\
 Retrieve WHOIS data for a domain
 ```
