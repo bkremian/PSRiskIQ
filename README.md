@@ -14,7 +14,8 @@ when you import the PSRiskIQ module from the `$Home` directory.
 
 ## Exporting Credentials
 You can save your credentials using the `ExportCred()` method, which will prompt you for your Key (username)
-and Secret (password). Once input, the credentials will be exported to `$Home\RiskIQ.cred`.
+and Secret (password). Once input, the credentials will be exported as `.\RiskIQ.cred`. If you move the
+credentials to your home directory, they will be automatically imported when PSRiskIQ is loaded.
 
 This exported file is designed to be used only by the user that created it, on the device that it was created on.
 Attemping to copy this file to a different device or importing it into PSRiskIQ under a different user account
@@ -274,7 +275,6 @@ Create artifacts in bulk
 ```
 
 **Remove-RiskArtifact**:\
-
 Delete an artifact
 ```
   -ArtifactId [String] (Required)
