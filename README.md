@@ -2,6 +2,8 @@
 You can clone this repository to manually import PSRiskIQ, or install from the **[PowerShell Gallery](https://www.powershellgallery.com/packages/PSRiskIQ)**:\
 `PS> Install-Module -Name PSRiskIQ`
 
+Once installed, you can begin running PSRiskIQ commands once you `Import-Module -Name PSRiskIQ`.
+
 ## Requirements
 Requires **[PowerShell 5.1+](https://github.com/PowerShell/PowerShell#get-powershell)**
 
