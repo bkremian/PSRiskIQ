@@ -8,7 +8,7 @@ function Get-Query {
     A runtime parameter dictionary to search for input values
 #>
     [CmdletBinding()]
-    [OutputType([array])]
+    [OutputType()]
     param(
         [Parameter(
             Mandatory = $true,
@@ -21,16 +21,22 @@ function Get-Query {
         [System.Collections.ArrayList] $Dynamic
     )
     process {
-        foreach ($Item in ($Dynamic.Values | Where-Object IsSet)) {
+        $QueryOutput = foreach ($Item in ($Dynamic.Values | Where-Object IsSet)) {
             # Match input parameter with endpoint
             $Param = $Endpoint.Parameters | Where-Object Dynamic -eq $Item.Name
 
             if ($Param.In -match 'query') {
                 foreach ($Value in $Item.Value) {
-                    # Output query inputs as an array
+                    # Output query value
                     ,"$($Param.Name)=$($Value)"
                 }
             }
+        }
+        if ($QueryOutput) {
+            Write-Debug "[$($MyInvocation.MyCommand.Name)] $($QueryOutput -join ', ')"
+
+            # Output query value(s)
+            $QueryOutput
         }
     }
 }

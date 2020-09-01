@@ -38,9 +38,6 @@ function Get-Param {
             if ((Get-Variable $_).Value) {
                 # Add results to output
                 $Output[$_] = (Get-Variable $_).Value
-
-                Write-Verbose ("[$($MyInvocation.MyCommand.Name)] $(((Get-Variable $_).Value).count)" +
-                    " $(($_).ToLower()) input(s)")
             }
         }
         # Convert to Json and output

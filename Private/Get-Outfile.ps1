@@ -8,7 +8,7 @@ function Get-Outfile {
     A runtime parameter dictionary to search for input values
 #>
     [CmdletBinding()]
-    [OutputType([array])]
+    [OutputType()]
     param(
         [Parameter(
             Mandatory = $true,
@@ -25,15 +25,21 @@ function Get-Outfile {
             # Match input parameter with endpoint
             $Param = $Endpoint.Parameters | Where-Object Dynamic -eq $Item.Name
 
-            if ($Param.In -match 'outfile') {
+            $FileOutput = if ($Param.In -match 'outfile') {
                 if ($Item.Value -match '^\.') {
-                    # Output value, converting relative path to absolute path
+                    # Convert relative path to absolute path
                     $Item.Value -replace '^\.', $pwd
                 } else {
-                    # Output value
+                    # Output path
                     $Item.Value
                 }
             }
+        }
+        if ($FileOutput) {
+            Write-Debug "[$($MyInvocation.MyCommand.Name)] $FileOutput"
+
+            # Output outfile value
+            $FileOutput
         }
     }
 }

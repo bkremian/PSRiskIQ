@@ -8,7 +8,7 @@ function Get-Header {
     A runtime parameter dictionary to search for input values
 #>
     [CmdletBinding()]
-    [OutputType([hashtable])]
+    [OutputType()]
     param(
         [Parameter(
             Mandatory = $true,
@@ -26,17 +26,18 @@ function Get-Header {
             $Param = $Endpoint.Parameters | Where-Object Dynamic -eq $Item.Name
 
             if ($Param.In -match 'header') {
-                if (-not($Header)) {
-                    $Header = @{ }
+                if (-not($HeaderOutput)) {
+                    $HeaderOutput = @{ }
                 }
                 # Add header key/value to output
-                $Header[$Param.Name] = $Item.Value
+                $HeaderOutput[$Param.Name] = $Item.Value
             }
         }
-        if ($Header) {
-            # Output result
-            Write-Debug ("[$($MyInvocation.MyCommand.Name)] $(ConvertTo-Json $Header)")
-            $Header
+        if ($HeaderOutput) {
+            Write-Debug "[$($MyInvocation.MyCommand.Name)] $(ConvertTo-Json $HeaderOutput)"
+
+            # Output header value
+            $HeaderOutput
         }
     }
 }

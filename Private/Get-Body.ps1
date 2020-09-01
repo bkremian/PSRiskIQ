@@ -8,7 +8,7 @@ function Get-Body {
     A runtime parameter dictionary to search for input values
 #>
     [CmdletBinding()]
-    [OutputType([string])]
+    [OutputType()]
     param(
         [Parameter(
             Mandatory = $true,
@@ -27,39 +27,35 @@ function Get-Body {
 
             if ($Param.In -match 'body') {
                 if ($Param.Name -eq 'body') {
+                    # Capture filename for debug output
+                    $Filename = $Item.Value
+
                     if ($PSVersionTable.PSVersion.Major -ge 6) {
                         # Convert to bytes and upload in PowerShell 6+
-                        $BodyInput = Get-Content $Item.Value -AsByteStream
+                        $ByteOutput = Get-Content $Item.Value -AsByteStream
                     } else {
                         # Convert to bytes and upload in PowerShell 5.1
-                        $BodyInput = Get-Content $Item.Value -Encoding Byte -Raw
+                        $ByteOutput = Get-Content $Item.Value -Encoding Byte -Raw
                     }
-                }
-                if (-not($BodyInput)) {
-                    # Create output object
-                    $BodyInput = @{ }
-                }
-                if ($Param.Parent -and $Param.Parent -ne 'array') {
-                    if (-not($Parents)) {
-                        # Create object to contain 'parents'
-                        $Parents = @{ }
-                    }
-                    if (-not($Parents.($Param.Parent))) {
-                        # Add table to parents
-                        $Parents[$Param.Parent] = @{ }
-                    }
-                    # Add input to parent object
-                    $Parents.($Param.Parent)[$Param.Name] = $Item.Value
                 } else {
-                    if ($Param.Parent -eq 'array') {
-                        $Array = $true
+                    if (-not($BodyOutput)) {
+                        # Create output object
+                        $BodyOutput = @{ }
                     }
-                    if ($Item.Value -is [array] -and $Item.Value.count -eq 1) {
-                        # Add single input to body output as a string
-                        $BodyInput[$Param.Name] = $Item.Value[0]
+                    if ($Param.Parent) {
+                        if (-not($Parents)) {
+                            # Create object to contain 'parents'
+                            $Parents = @{ }
+                        }
+                        if (-not($Parents.($Param.Parent))) {
+                            # Add table to parents
+                            $Parents[$Param.Parent] = @{ }
+                        }
+                        # Add input to parent object
+                        $Parents.($Param.Parent)[$Param.Name] = $Item.Value
                     } else {
-                        # Add input(s) to body output
-                        $BodyInput[$Param.Name] = $Item.Value
+                        # Add input to body output
+                        $BodyOutput[$Param.Name] = $Item.Value
                     }
                 }
             }
@@ -67,17 +63,17 @@ function Get-Body {
         if ($Parents) {
             foreach ($Key in $Parents.Keys) {
                 # Add value arrays with parents to body output
-                $BodyInput[$Key] = @( $Parents.$Key )
+                $BodyOutput[$Key] = @( $Parents.$Key )
             }
         }
-        if ($BodyInput) {
-            if ($Array -eq $true) {
-                # Add result as an array
-                @( $BodyInput )
-            } else {
-                # Output result
-                $BodyInput
-            }
+        if ($BodyOutput) {
+            # Output body value
+            $BodyOutput
+        } elseif ($ByteOutput) {
+            Write-Debug "[$($MyInvocation.MyCommand.Name)] File: $Filename"
+
+            # Output file content
+            $ByteOutput
         }
     }
 }

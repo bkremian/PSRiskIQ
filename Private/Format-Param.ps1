@@ -14,12 +14,13 @@ function Format-Param {
         [hashtable] $Param
     )
     process {
-        if ($Param.Body) {
+        if ($Param.Body -and ($RiskIQ.Endpoint($Param.Endpoint)).Headers.ContentType -eq 'application/json') {
             # Convert body to Json
             $Param.Body = ConvertTo-Json $Param.Body -Depth 8
+
             Write-Debug ("[$($MyInvocation.MyCommand.Name)] $($Param.Body)")
         }
-        # Output result
+        # Output parameters
         $Param
     }
 }

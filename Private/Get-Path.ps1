@@ -8,7 +8,7 @@ function Get-Path {
     A runtime parameter dictionary to search for input values
 #>
     [CmdletBinding()]
-    [OutputType([array])]
+    [OutputType()]
     param(
         [Parameter(
             Mandatory = $true,
@@ -20,15 +20,28 @@ function Get-Path {
             Position = 2)]
         [System.Collections.ArrayList] $Dynamic
     )
+    begin {
+        # Retrieve default endpoint path
+        $PathOutput = $Endpoint.Path
+    }
     process {
         foreach ($Item in ($Dynamic.Values | Where-Object IsSet)) {
             # Match input parameter with endpoint
             $Param = $Endpoint.Parameters | Where-Object Dynamic -eq $Item.Name
 
             if ($Param.In -match 'path') {
-                # Output modified path string
-                $Endpoint.Path -replace $Param.Name, $Item.Value
+                # Modify path to include input
+                $PathOutput = $PathOutput.replace(($Param.Name), ($Item.Value))
+
+                # Set modified status for debug output
+                $PathModified = $true
             }
+        }
+        if ($PathModified -eq $true) {
+            Write-Debug "[$($MyInvocation.MyCommand.Name)] $PathOutput"
+
+            # Output path value
+            $PathOutput
         }
     }
 }

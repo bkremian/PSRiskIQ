@@ -32,7 +32,7 @@ function Invoke-Endpoint {
         [array] $Query,
 
         [Parameter()]
-        [string] $Body,
+        [object] $Body,
 
         [Parameter()]
         [System.Collections.IDictionary] $Formdata,
@@ -53,124 +53,99 @@ function Invoke-Endpoint {
         } else {
             "$($RiskIQ.Hostname)$($Target.Path)"
         }
+        if ($Query) {
+            # Add query items to UriPath
+            $FullPath += "?$($Query -join '&')"
+        }
         if ($PSVersionTable.PSVersion.Major -lt 6) {
             # Add System.Net.Http
             Add-Type -AssemblyName System.Net.Http
         }
     }
     process {
-        if ($Query) {
-            # Add query items to UriPath
-            $FullPath += "?$($Query -join '&')"
-            Write-Debug ("[$($MyInvocation.MyCommand.Name)] $($Query -join '&')")
+        # Create Http request objects
+        $Client = New-Object System.Net.Http.HttpClient
+        $Method = New-Object System.Net.Http.HttpMethod($Target.Method)
+        $Request = New-Object System.Net.Http.HttpRequestMessage($Method, $FullPath)
+
+        # Add headers
+        $Param = @{
+            Endpoint = $Target
+            Request = $Request
         }
-        if ($Outfile) {
-            # Create WebClient object
-            $Request = New-Object System.Net.WebClient
+        if ($Header) {
+            $Param['Header'] = $Header
+        }
+        Format-Header @Param
 
-            # Add headers and authorization to request
-            $Param = @{
-                Endpoint = $Endpoint
-                Request = $Request
+        Write-Verbose ("[$($MyInvocation.MyCommand.Name)] $(($Target.Method).ToUpper())" +
+        " $($RiskIQ.Hostname)$($Target.Path)")
+        try {
+            if ($Formdata) {
+                # Add multipart content
+                $MultiContent = New-Object System.Net.Http.MultipartFormDataContent
+
+                foreach ($Key in $Formdata.Keys) {
+                    if ((Test-Path $Formdata.$Key) -eq $true) {
+                        # If file, read as bytes
+                        $FileStream = [System.IO.File]::OpenRead($Formdata.$Key)
+                        $Filename = [System.IO.Path]::GetFileName($Formdata.$Key)
+                        $FileContent = New-Object System.Net.Http.StreamContent($FileStream)
+                        $MultiContent.Add($FileContent, $Key, $Filename)
+                    } else {
+                        # Add as string
+                        $StringContent = New-Object System.Net.Http.StringContent($Formdata.$Key)
+                        $MultiContent.Add($StringContent, $Key)
+                    }
+                }
+                $Request.Content = $MultiContent
+            } elseif ($Body) {
+                # Add body content
+                $StringContent = New-Object System.Net.Http.StringContent($Body,
+                    [System.Text.Encoding]::UTF8, ($Target.Headers.ContentType))
+                $Request.Content = $StringContent
             }
-            if ($Header) {
-                $Param['Header'] = $Header
-            }
-            Format-Header @Param
-
-            Write-Verbose ("[$($MyInvocation.MyCommand.Name)] $(($Target.Method).ToUpper())" +
-            " $($RiskIQ.Hostname)$($Target.Path)")
-
             # Make request
-            $Request.DownloadFile($FullPath, $Outfile)
-        } elseif ($Formdata) {
-            # Create HttpClient and MultipartFormData objects
-            $Request = New-Object System.Net.Http.HttpClient
-            $FormContent = New-Object System.Net.Http.MultipartFormDataContent
-
-            # Add headers and authorization to request
-            $Param = @{
-                Endpoint = $Endpoint
-                Request = $Request
-            }
-            if ($Header) {
-                $Param['Header'] = $Header
-            }
-            Format-Header @Param
-
-            foreach ($Key in $Formdata.Keys) {
-                if ((Test-Path $Formdata.$Key) -eq $true) {
-                    # Add file content
-                    $FileStream = [System.IO.File]::OpenRead($Formdata.$Key)
-                    $Filename = [System.IO.Path]::GetFileName($Formdata.$Key)
-                    $FileContent = New-Object System.Net.Http.StreamContent($FileStream)
-                    $FormContent.Add($FileContent, $Key, $Filename)
-                } else {
-                    # Add other content
-                    $StringContent = New-Object System.Net.Http.StringContent $Formdata.$Key
-                    $FormContent.Add($StringContent, $Key)
+            $Response = if ($Outfile) {
+                foreach ($Pair in $Request.Headers.GetEnumerator()) {
+                    # Add headers to HttpClient from HttpRequestMessage
+                    $Client.DefaultRequestHeaders.Add($Pair.Key, $Pair.Value)
                 }
-            }
-            Write-Verbose ("[$($MyInvocation.MyCommand.Name)] $(($Target.Method).ToUpper())" +
-                " $($RiskIQ.Hostname)$($Target.Path)")
+                # Dispose of HttpRequestMessage
+                $Request.Dispose()
 
-            # Make request and output result code
-            $Request.PostAsync($FullPath, $FormContent).Result.StatusCode
-        } else {
-            # Create WebRequest object
-            $Request = [System.Net.WebRequest]::Create($FullPath)
-            $Request.Method = $Target.Method
-
-            # Add headers and authorization to request
-            $Param = @{
-                Endpoint = $Endpoint
-                Request = $Request
+                # Make direct request using HttpClient
+                $Client.GetByteArrayAsync($FullPath)
+            } else {
+                # Make request using HttpRequestMessage
+                $Client.SendAsync($Request)
             }
-            if ($Header) {
-                $Param['Header'] = $Header
-            }
-            Format-Header @Param
-
-            if ($Body) {
-                # Add body to request
-                if ($Body -is [string]) {
-                    $RequestStream = $Request.GetRequestStream()
-                    $StreamWriter = [System.IO.StreamWriter]($RequestStream)
-                    $StreamWriter.Write($Body)
-                    $StreamWriter.Flush()
-                    $StreamWriter.Close()
-                } else {
-                    $Request.ContentLength = $Body.Length
-                    $RequestStream = $Request.GetRequestStream()
-                    $RequestStream.Write($Body, 0, $Body.Length)
+            if ($Response.Result -is [System.Byte[]]) {
+                # Output response to file
+                [System.IO.File]::WriteAllBytes($Outfile, ($Response.Result))
+    
+                if (Test-Path $Outfile) {
+                    # Display successful output
+                    Get-ChildItem $Outfile | Out-Host
                 }
+            } elseif ($Response.Result.IsSuccessStatusCode) {
+                # Format output
+                Format-Result $Response
+            } elseif ($Response.Result) {
+                # Output exception
+                $Response.Result.EnsureSuccessStatusCode()
+            } else {
+                $Response
             }
-            Write-Verbose ("[$($MyInvocation.MyCommand.Name)] $(($Target.Method).ToUpper())" +
-            " $($RiskIQ.Hostname)$($Target.Path)")
-
-            try {
-                # Make request
-                $Response = $Request.GetResponse()
-            } catch {
-                $_
-            }
-            if ($Response) {
-                # Capture response
-                $ResponseStream = $Response.GetResponseStream()
-                $StreamReader = [System.IO.StreamReader]($ResponseStream)
-
-                # Output formatted result
-                ConvertFrom-Json $StreamReader.ReadToEnd()
-            }
+        } catch {
+            # Output error
+            throw $_
         }
     }
     end {
-        # Close open streams
-        @($FileContent, $FileStream, $ResponseStream, $StreamReader, $StreamWriter) |
-            ForEach-Object {
-            if ($null -ne $_) {
-                $_.Dispose()
-            }
+        if ($Response) {
+            # Dispose open HttpClient
+            $Response.Dispose()
         }
     }
 }

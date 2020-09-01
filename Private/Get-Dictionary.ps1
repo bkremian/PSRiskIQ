@@ -1,5 +1,5 @@
 function Get-Dictionary {
-<#
+    <#
 .SYNOPSIS
     Create a dynamic parameter dictionary
 .PARAMETER ENDPOINTS
@@ -29,7 +29,7 @@ function Get-Dictionary {
                     'bool' {
                         [bool]
                     }
-					'hashtable' {
+                    'hashtable' {
                         [hashtable]
                     }
                     'int' {

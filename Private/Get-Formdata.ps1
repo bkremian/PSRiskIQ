@@ -8,7 +8,7 @@ function Get-Formdata {
     A runtime parameter dictionary to search for input values
 #>
     [CmdletBinding()]
-    [OutputType([array])]
+    [OutputType()]
     param(
         [Parameter(
             Mandatory = $true,
@@ -26,16 +26,18 @@ function Get-Formdata {
             $Param = $Endpoint.Parameters | Where-Object Dynamic -eq $Item.Name
 
             if ($Param.In -match 'formdata') {
-                if (-not($Formdata)) {
-                    $Formdata = @{}
+                if (-not($FormdataOutput)) {
+                    $FormdataOutput = @{}
                 }
                 # Add parameter to output
-                $Formdata[$Param.Name] = $Item.Value
+                $FormdataOutput[$Param.Name] = $Item.Value
             }
         }
-        if ($Formdata) {
-            # Output result
-            $Formdata
+        if ($FormdataOutput) {
+            Write-Debug "[$($MyInvocation.MyCommand.Name)] $(ConvertTo-Json $FormdataOutput)"
+
+            # Output formdata value
+            $FormdataOutput
         }
     }
 }
