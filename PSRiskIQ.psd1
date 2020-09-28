@@ -12,7 +12,7 @@
 RootModule = 'PSRiskIQ.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.2'
+ModuleVersion = '1.0.3'
 
 # Supported PSEditions
 CompatiblePSEditions = @('Desktop','Core')
@@ -168,8 +168,9 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = "
-        Version 1.0.2:
-          Changed request methods to use System.Net.HttpClient and updated various private functions
+        Version 1.0.3:
+          Updated Get-Dictionary and Get-DynamicHelp functions to improve the
+          -Help information for each command
         "
 
         # Prerelease string of this module
